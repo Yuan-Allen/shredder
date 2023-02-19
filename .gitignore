@@ -1,0 +1,6 @@
+.cipd
+.gclient*
+*.d
+*.o
+shredder
+example_client

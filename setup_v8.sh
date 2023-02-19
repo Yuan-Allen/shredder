@@ -12,6 +12,7 @@ unzip ninja-linux.zip
 sudo cp ninja /usr/local/bin/
 sudo apt-get install clang
 cd gn
+git checkout e1ac69b17da0c6d4f5e34e686690ff70c6a43e6f
 python build/gen.py
 sudo ninja -C out
 sudo cp out/gn /usr/local/bin/
