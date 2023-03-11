@@ -178,7 +178,7 @@ public:
     future<> js();
     future<bool> remove_impl(sstring& key);
     future<> set(args_collection& args, output_stream<char>& out, int tid);
-    future<> get(args_collection& args, output_stream<char>& out);
+    future<> get(args_collection& args, output_stream<char>& out, int tid);
     future<> del(args_collection& args, output_stream<char>& out);
     future<> js_req(args_collection& args, output_stream<char>& out, int tid);
     future<int> get_tid(void);

@@ -39,9 +39,10 @@ future<> req_service::set(args_collection& args, output_stream<char>& out, int t
     sstring& val = args._command_args[1];
 
     db_val* v = (db_val*)malloc(sizeof(db_val));
-    v->data = (void *)malloc(sizeof(size_t));
-    *(uint32_t*)(v->data) = atoi(val.c_str());
-    v->length = 1;
+    v->length = val.length();
+    v->data = (void *)malloc(v->length);
+    memcpy(v->data, val.c_str(), v->length);
+
     uint32_t k = atoi(key.c_str());
     v->key = k;
 
@@ -63,14 +64,13 @@ inline uint32_t get_hash(uint32_t key, uint32_t seed) {
 }
 
 // C++ version of get()
-future<> req_service::get(args_collection& args, output_stream<char>& out) {
+future<> req_service::get(args_collection& args, output_stream<char>& out, int tid) {
     if (args._command_args_count < 1) {
         cout << "syntax err\n";
         return out.write(msg_syntax_err);
     }
     sstring& key = args._command_args[0];
     auto k = atoi(key.c_str());
-    auto tid = current_tid;
 
     auto db = get_local_database();
     db_val* val = db->ht_get(&db->ht[tid], k);
@@ -82,8 +82,7 @@ future<> req_service::get(args_collection& args, output_stream<char>& out) {
         return out.write(std::move(result));
     }
 
-    auto data = (uint32_t*)(val->data);
-    sstring v = to_sstring(*data);
+    sstring v((char*)(val->data), val->length);
 
     auto result = reply_builder::build_direct(v, v.size());
     return out.write(std::move(result));

@@ -14,7 +14,7 @@ inline distributed<network_server>& get_net_server() {
 class network_server {
 private:
     lw_shared_ptr<server_socket> _listener;
-    uint16_t _port = 11211;
+    uint16_t _port = 6379;
     // Tenant id to be assigned to an incoming connection.
     int tid = 0;
 
