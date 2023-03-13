@@ -76,9 +76,8 @@ future<> req_service::get(args_collection& args, output_stream<char>& out, int t
     db_val* val = db->ht_get(&db->ht[tid], k);
 
     if (!val) {
-        cout << "not found" << key << "\n";
-        sstring v = to_sstring(-1);
-        auto result = reply_builder::build_direct(v, v.size());
+        cout << "not found " << key << "\n";
+        auto result = reply_builder::build_error_message();
         return out.write(std::move(result));
     }
 

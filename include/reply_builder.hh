@@ -98,6 +98,15 @@ static scattered_message<char> build_direct(const sstring& message, size_t size)
    return m;
 }
 
+static scattered_message<char> build_error_message()
+{
+   auto m = scattered_message<char>();
+   m.append_static(msg_batch_tag);
+   m.append(to_sstring(-1));
+   m.append_static(msg_crlf);
+   return m;
+}
+
 inline static future<> build_local(output_stream<char>& out, const sstring& message)
 {
    return out.write(message);
