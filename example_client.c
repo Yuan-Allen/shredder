@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    int port = (argc > 2) ? atoi(argv[2]) : 11211;
+    int port = (argc > 2) ? atoi(argv[2]) : 6379;
 
     struct timeval timeout = { 1, 500000 }; // 1.5 seconds
     if (isunix) {
@@ -58,6 +58,11 @@ int main(int argc, char **argv) {
     // Run JavaScript neural predict function, the result should be 1
     reply = redisCommand(c,"JS %s", "predict");
     printf("JS predict: %s\n", reply->str);
+    freeReplyObject(reply);
+
+    // Run JavaScript list_traversal function
+    reply = redisCommand(c,"JS %s %s %s", "list_traversal", "0", "2");
+    printf("JS list_traversal 0 2: %s\n", reply->str);
     freeReplyObject(reply);
 
     /* Disconnects and frees the context */

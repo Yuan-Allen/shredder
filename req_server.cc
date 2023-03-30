@@ -277,7 +277,11 @@ void get_hash_table(const v8::FunctionCallbackInfo<v8::Value>& args) {
 //C++ binding to load SNAP ego network into hashtable
 void load_fb_graph(const v8::FunctionCallbackInfo<v8::Value>& args) {
     string line;
-    ifstream fb_file("facebook_combined.txt");
+
+    v8::String::Utf8Value str(args.GetIsolate(), args[0]);
+    const char* filename = ToCString(str);
+
+    ifstream fb_file(filename);
     if (fb_file) {
         uint32_t prev_key = 0;
         vector<uint32_t> arr;

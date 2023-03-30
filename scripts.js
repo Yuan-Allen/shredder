@@ -17,7 +17,8 @@ function setup() {
   if (setup_done === 1)
     return;
   // Load Facebook social graph.
-  LoadFBGraph();
+  // LoadFBGraph("dataset/facebook_combined.txt");
+  LoadFBGraph("dataset/dataset.txt")
 
 
   // Generating random data for evaluation
@@ -173,4 +174,18 @@ function count_friend_list(key, depth) {
         sum = sum + count_friend_list(k, depth - 1);
     }
     return sum;
+}
+
+function list_traversal(nodeid, depth){
+  print("list_traversal begin\n");
+  for (var i = 0; i < depth; i++){
+    var list_buffer = new ArrayBuffer(0);
+    var l = HTGet(table, nodeid, list_buffer);
+    if (l === undefined) {
+      print("list_traversal error\n");
+      return 0;
+    }
+    nodeid = HTGetField(list_buffer, 0);
+  }
+  return nodeid;
 }
