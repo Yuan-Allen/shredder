@@ -177,7 +177,6 @@ function count_friend_list(key, depth) {
 }
 
 function list_traversal(nodeid, depth){
-  print("list_traversal begin\n");
   for (var i = 0; i < depth; i++){
     var list_buffer = new ArrayBuffer(0);
     var l = HTGet(table, nodeid, list_buffer);
