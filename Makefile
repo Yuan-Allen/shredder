@@ -19,6 +19,10 @@ test_client : test_client.c
 async_client: async_client.c
 	gcc -o async_client async_client.c -lhiredis -levent
 
+tput_client : add_one_test.c
+	gcc -o add_one_test add_one_test.c -lhiredis -lpthread
+
+
 .PHONY: clean
 
 clean:
