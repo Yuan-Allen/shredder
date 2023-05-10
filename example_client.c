@@ -54,10 +54,10 @@ int main(int argc, char **argv) {
   printf("JS count_friend_list 0 1: %s\n", reply->str);
   freeReplyObject(reply);
 
-  // Run JavaScript neural predict function, the result should be 1
-  reply = redisCommand(c, "JS %s", "predict");
-  printf("JS predict: %s\n", reply->str);
-  freeReplyObject(reply);
+  // // Run JavaScript neural predict function, the result should be 1
+  // reply = redisCommand(c, "JS %s", "predict");
+  // printf("JS predict: %s\n", reply->str);
+  // freeReplyObject(reply);
 
   // Run JavaScript list_traversal function
   reply = redisCommand(c, "JS %s %s %s", "list_traversal", "0", "2");
