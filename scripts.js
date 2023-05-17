@@ -12,6 +12,8 @@ var nRows = Math.floor(bytes / recordSize);
 var table;
 var setup_done = 0;
 
+var large_buffer_id = 10000003
+
 // Setup hashtable and get the pointer to it.
 function setup() {
   if (setup_done === 1)
@@ -61,6 +63,9 @@ function setup() {
   // // var input = new Float32Array([0.1666666666666668, 0.41666666666666663, 0.06779661016949151, 0.04166666666666667]);
   // var input_buf = input.buffer;
   // DBSet(10001, input_buf);
+
+  var large_buffer = new ArrayBuffer(10 * 1024 * 1024);
+  DBSet(large_buffer_id, large_buffer)
 
   table = GetHashTable();
   setup_done = 1;
@@ -205,4 +210,19 @@ function add_one(key) {
   array = new Uint32Array([value])
   DBSet(key, array.buffer);
   return value
+}
+
+function rpc_split(k) {
+  var large_buffer = new ArrayBuffer(10 * 1024 * 1024);
+  var l = HTGet(table, large_buffer_id, large_buffer);
+  if (l === undefined) {
+    print("rpc_split error\n");
+    return 0;
+  }
+  const chunkSize = large_buffer.byteLength / 4;
+  for (let i = 0; i < 4; i += 1) {
+    const chunk = large_buffer.slice(i * chunkSize, (i + 1) * chunkSize);
+    DBSet(large_buffer_id + i + 1, chunk)
+  }
+  return "+OK\r\n";
 }
