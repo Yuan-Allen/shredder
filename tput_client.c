@@ -18,7 +18,10 @@ void* req_func(void *args) {
   struct ReqParam *params = (struct ReqParam *)args;
 
   srand(params->t_id);
-  
+
+  struct timeval timeout = {1, 500000};  // 1.5 seconds
+  params->c = redisConnectWithTimeout("127.0.0.1", 6379, timeout);
+
   while(1) {
     char start[5];
     int r = rand() % 1000 * 10;
@@ -58,8 +61,8 @@ int main(int argc, char **argv) {
 
   // Run JavaScript function 'setup' to setup test data,
   // including Facebook social graphs and neural network model.
-  reply = redisCommand(c, "JS %s", "setup");
-  printf("JS setup: %s\n", reply->str);
+  reply = redisCommand(c, "JS %s", "list_traversal_setup");
+  printf("JS list_traversal_setup: %s\n", reply->str);
   freeReplyObject(reply);
 
   printf("Func test\n");

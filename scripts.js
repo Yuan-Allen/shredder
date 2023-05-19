@@ -73,6 +73,13 @@ function setup() {
 
 }
 
+function list_traversal_setup() {
+  if (setup_done === 1)
+    return;
+
+  LoadFBGraph("dataset/dataset.txt")
+}
+
 // Parameters for inference (Wine dataset)
 var num_inputs = 13;
 var num_hidden_weights = num_inputs + 1;
