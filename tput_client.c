@@ -45,6 +45,8 @@ int main(int argc, char **argv) {
   int port = 6379;
   const char *depth = (argc > 2) ? argv[2] : "2";
 
+  int do_setup = (argc > 3) ? argc[3] : 1;
+
   struct timeval timeout = {1, 500000};  // 1.5 seconds
   
   c = redisConnectWithTimeout(hostname, port, timeout);
@@ -61,9 +63,11 @@ int main(int argc, char **argv) {
 
   // Run JavaScript function 'setup' to setup test data,
   // including Facebook social graphs and neural network model.
-  reply = redisCommand(c, "JS %s", "list_traversal_setup");
-  printf("JS list_traversal_setup: %s\n", reply->str);
-  freeReplyObject(reply);
+  if (do_setup) {
+    reply = redisCommand(c, "JS %s", "list_traversal_setup");
+    printf("JS list_traversal_setup: %s\n", reply->str);
+    freeReplyObject(reply);
+  }
 
   printf("Func test\n");
   pthread_t threads[NUM_THREADS];
