@@ -78,6 +78,11 @@ function list_traversal_setup() {
     return;
 
   LoadFBGraph("dataset/dataset.txt")
+
+  var large_buffer = new ArrayBuffer(10 * 1024 * 1024);
+  DBSet(large_buffer_id, large_buffer)
+
+  table = GetHashTable();
   setup_done = 1;
   return "+OK\r\n";
 }
