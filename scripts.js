@@ -78,6 +78,8 @@ function list_traversal_setup() {
     return;
 
   LoadFBGraph("dataset/dataset.txt")
+  setup_done = 1;
+  return "+OK\r\n";
 }
 
 // Parameters for inference (Wine dataset)
