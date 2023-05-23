@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
   int port = 6379;
   const char *depth = (argc > 2) ? argv[2] : "2";
 
-  int do_setup = (argc > 3) ? argv[3] : 1;
+  int do_setup = (argc > 3) ? atoi(argv[3]) : 1;
 
   struct timeval timeout = {1, 500000};  // 1.5 seconds
   
