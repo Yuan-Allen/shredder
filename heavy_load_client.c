@@ -16,7 +16,7 @@ void* req_func(void *args) {
   struct ReqParam *params = (struct ReqParam *)args;
 
   while(1) {
-    redisReply *reply = redisCommand(params->c, "JS %s", "load_generator", params->sleep_t_ms);
+    redisReply *reply = redisCommand(params->c, "JS %s %s", "load_generator", params->sleep_t_ms);
     freeReplyObject(reply);
 
     (params->count)++;
