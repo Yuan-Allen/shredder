@@ -13,6 +13,9 @@ example_client : example_client.c
 tput_client : tput_client.c
 	gcc -o tput_client tput_client.c -lhiredis -lpthread
 
+heavy_load_client : heavy_load_client.c
+	gcc -o heavy_load_client heavy_load_client.c -lhiredis -lpthread
+
 test_client : test_client.c
 	gcc -o test_client test_client.c -lhiredis
 
