@@ -15,12 +15,25 @@ var setup_done = 0;
 var large_buffer_id = 10000003
 
 // Emulate heavy load
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+// function sleep(ms) {
+//   return new Promise(resolve => setTimeout(resolve, ms));
+// }
+
+// async function load_generator(t_ms) {
+//   await sleep(t_ms);
+//   return 1;
+// }
+
+function pausecomp(millis) {
+  var date = new Date();
+  var curDate = null;
+  do { curDate = new Date(); }
+  while (curDate - date < millis);
 }
 
-async function load_generator(t_ms) {
-  await sleep(t_ms);
+function load_generator(t_ms) {
+  pausecomp(t_ms);
+  return;
 }
 
 // Setup hashtable and get the pointer to it.
