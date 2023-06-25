@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
   }
 
   /* Disconnects and frees the context */
-  redisFree(c);
+//   redisFree(c);
 
   return 0;
 }
