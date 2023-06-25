@@ -8,7 +8,7 @@
 struct ReqParam {
   redisContext *c;
   int t_id;
-  int sleep_t_ms;
+  const char* sleep_t_ms;
   int count;
 };
 
@@ -16,7 +16,7 @@ void* req_func(void *args) {
   struct ReqParam *params = (struct ReqParam *)args;
 
   while(1) {
-    redisReply *reply = redisCommand(params->c, "JS %s", "load_generator", itoa(params->sleep_t_ms));
+    redisReply *reply = redisCommand(params->c, "JS %s", "load_generator", params->sleep_t_ms);
     freeReplyObject(reply);
 
     (params->count)++;
@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   const char *hostname = "127.0.0.1";
 
   int port = 6379;
-  int sleep_t_ms = (argc > 1) ? atoi(argv[1]) : 100;
+  const char* sleep_t_ms = (argc > 1) ? argv[1] : 100;
   int NUM_THREADS = (argc > 2) ? atoi(argv[2]) : 1;
   
   struct timeval timeout = {1, 500000};  // 1.5 seconds
@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
       exit(1);
     }
     params[i].t_id = i;
-    params.sleep_t_ms = sleep_t_ms;
+    params[i].sleep_t_ms = sleep_t_ms;
     params[i].count = 0;
     pthread_create(&threads[i], NULL, req_func, &params[i]);
   }
