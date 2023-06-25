@@ -26,7 +26,6 @@ void* req_func(void *args) {
 }
 
 int main(int argc, char **argv) {
-  redisContext *c;
   redisReply *reply;
   const char *hostname = "127.0.0.1";
 
@@ -41,10 +40,10 @@ int main(int argc, char **argv) {
   struct ReqParam params[NUM_THREADS];
   for (int i = 0; i < NUM_THREADS; ++i){
     params[i].c = redisConnectWithTimeout(hostname, port, timeout);
-    if (c == NULL || c->err) {
-    if (c) {
-      printf("Connection error: %s\n", c->errstr);
-      redisFree(c);
+    if (params[i].c == NULL || params[i].c->err) {
+    if (params[i].c) {
+      printf("Connection error: %s\n", params[i].c->errstr);
+      redisFree(params[i].c);
     } else {
       printf("Connection error: can't allocate redis context\n");
     }
