@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   const char *hostname = "127.0.0.1";
 
   int port = 6379;
-  const char* sleep_t_ms = (argc > 1) ? argv[1] : 100;
+  const char* sleep_t_ms = (argc > 1) ? argv[1] : "100";
   int NUM_THREADS = (argc > 2) ? atoi(argv[2]) : 1;
   
   struct timeval timeout = {1, 500000};  // 1.5 seconds
