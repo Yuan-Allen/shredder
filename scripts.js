@@ -13,6 +13,7 @@ var table;
 var setup_done = 0;
 
 var large_buffer_id = 10000003
+var ten_us_counter = 25
 
 // Emulate heavy load
 // function sleep(ms) {
@@ -41,6 +42,16 @@ function counter_test(t_ms) {
   }
   while (curDate - date < t_ms);
   return counter;
+}
+
+function us_emulator(t_us) {
+  var total_counter = t_us / 10 * ten_us_counter;
+  var date = new Date();
+  var curDate = null;
+  for (var i = 0; i < total_counter; i++) {
+    curDate = new Date();
+  }
+  return (curDate - date) * 1000;
 }
 
 function load_generator(t_ms) {

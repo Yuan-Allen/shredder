@@ -10,7 +10,8 @@ int main(int argc, char **argv) {
   const char *hostname = "127.0.0.1";
 
   int port = 6379;
-  const char *duration = (argc > 1) ? argv[1] : "1";
+  const char *func = (argc > 1) ? argv[1] : "counter_test";
+  const char *duration = (argc > 2) ? argv[2]: "10";
 
   struct timeval timeout = {1, 500000};  // 1.5 seconds
   
@@ -29,7 +30,7 @@ int main(int argc, char **argv) {
   printf("Func test\n");
   
   while(1) {
-    redisReply *reply = redisCommand(c, "JS %s %s", "counter_test", duration);
+    redisReply *reply = redisCommand(c, "JS %s %s", func, duration);
     printf("Count for %s ms: %s\n", duration, reply->str);
     freeReplyObject(reply);
   }
