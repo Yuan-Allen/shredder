@@ -39,7 +39,7 @@ function counter_test(t_ms) {
     curDate = new Date();
     counter = counter + 1;
   }
-  while (curDate - date < millis);
+  while (curDate - date < t_ms);
   return counter;
 }
 
