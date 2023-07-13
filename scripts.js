@@ -56,6 +56,31 @@ function us_emulator(t_us) {
   return (curDate - date) * 1000;
 }
 
+function compute_emulate_setup() {
+  if (setup_done === 1)
+    return;
+
+  LoadFBGraph("dataset/compute_emulate_dataset.txt")
+
+  var large_buffer = new ArrayBuffer(10 * 1024 * 1024);
+  DBSet(large_buffer_id, large_buffer)
+
+  table = GetHashTable();
+  setup_done = 1;
+  return "+OK\r\n";
+}
+
+function compute_emulate(key, duration) {
+  us_emulator(duration);
+  var buf = new ArrayBuffer(8);
+  var l = HTGet(table, key, buf);
+  if (l === undefined) {
+    print("Compute emulate get error\n");
+    return 0;
+  }
+  return l;
+}
+
 function load_generator(t_ms) {
   pausecomp(t_ms);
   return;
