@@ -31,6 +31,18 @@ function pausecomp(millis) {
   while (curDate - date < millis);
 }
 
+function counter_test(t_ms) {
+  var date = new Date();
+  var curDate = null;
+  var counter = 0
+  do {
+    curDate = new Date();
+    counter = counter + 1;
+  }
+  while (curDate - date < millis);
+  return counter;
+}
+
 function load_generator(t_ms) {
   pausecomp(t_ms);
   return;
