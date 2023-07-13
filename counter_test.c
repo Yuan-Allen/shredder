@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   
   while(1) {
     redisReply *reply = redisCommand(c, "JS %s %s", func, duration);
-    printf("Count for %s ms: %s\n", duration, reply->str);
+    printf("Func %s with arg %s returned: %s\n", func, duration, reply->str);
     freeReplyObject(reply);
   }
 

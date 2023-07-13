@@ -48,8 +48,10 @@ function us_emulator(t_us) {
   var total_counter = t_us / 10 * ten_us_counter;
   var date = new Date();
   var curDate = null;
+  var flag = false;
   for (var i = 0; i < total_counter; i++) {
     curDate = new Date();
+    flag = curDate > date;
   }
   return (curDate - date) * 1000;
 }
