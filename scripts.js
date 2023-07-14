@@ -70,14 +70,18 @@ function compute_emulate_setup() {
   return "+OK\r\n";
 }
 
-function compute_emulate(key, duration) {
+function compute_emulate(key, access_count, duration) {
   us_emulator(duration);
   var buf = new ArrayBuffer(8);
-  var l = HTGet(table, key, buf);
-  if (l === undefined) {
-    print("Compute emulate get error\n");
-    return 0;
+  var l = null;
+  for (var i = 0; i < access_count; i++) {
+    l = HTGet(table, key, buf);
+    if (l === undefined) {
+      print("Compute emulate get error\n");
+      return 0;
+    }
   }
+
   return l;
 }
 
