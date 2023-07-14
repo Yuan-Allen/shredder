@@ -45,6 +45,10 @@ function counter_test(t_ms) {
 }
 
 function us_emulator(t_us) {
+  if (t_us >= 1000) {
+    pausecomp(t_us / 1000);
+    return;
+  }
   var total_counter = t_us / 10 * ten_us_counter;
   var date = new Date();
   var curDate = null;
