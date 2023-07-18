@@ -167,6 +167,20 @@ function list_traversal_setup() {
   return "+OK\r\n";
 }
 
+function facebook_social_setup() {
+  if (setup_done === 1)
+    return;
+
+  LoadFBGraph("dataset/facebook_combined.txt")
+
+  var large_buffer = new ArrayBuffer(10 * 1024 * 1024);
+  DBSet(large_buffer_id, large_buffer)
+
+  table = GetHashTable();
+  setup_done = 1;
+  return "+OK\r\n";
+}
+
 // Parameters for inference (Wine dataset)
 var num_inputs = 13;
 var num_hidden_weights = num_inputs + 1;
@@ -291,6 +305,24 @@ function list_traversal(nodeid, depth) {
     nodeid = HTGetField(list_buffer, 0);
   }
   return nodeid;
+}
+
+function facebook_list_traversal(nodeid, depth) {
+  return list_traversal(nodeid, depth);
+}
+
+function facebook_get(key) {
+  var buf = new ArrayBuffer(8000);
+  var l = null;
+  for (var i = 0; i < access_count; i++) {
+    l = HTGet(table, key, buf);
+    if (l === undefined) {
+      print("Facebook get error\n");
+      return 0;
+    }
+  }
+
+  return l;
 }
 
 function add_one(key) {
