@@ -314,12 +314,11 @@ function facebook_list_traversal(nodeid, depth) {
 function facebook_get(key) {
   var buf = new ArrayBuffer(8000);
   var l = null;
-  for (var i = 0; i < access_count; i++) {
-    l = HTGet(table, key, buf);
-    if (l === undefined) {
-      print("Facebook get error\n");
-      return 0;
-    }
+
+  l = HTGet(table, key, buf);
+  if (l === undefined) {
+    print("Facebook get error\n");
+    return 0;
   }
 
   return l;
