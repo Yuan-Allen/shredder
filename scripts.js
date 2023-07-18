@@ -311,11 +311,10 @@ function facebook_list_traversal(nodeid, depth) {
   return list_traversal(nodeid, depth);
 }
 
+var facebook_get_buf = new ArrayBuffer(8000);
 function facebook_get(key) {
-  var buf = new ArrayBuffer(8000);
   var l = null;
-
-  l = HTGet(table, key, buf);
+  l = HTGet(table, key, facebook_get_buf);
   if (l === undefined) {
     print("Facebook get error\n");
     return 0;
